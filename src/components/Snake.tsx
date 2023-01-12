@@ -15,6 +15,8 @@ const Snake = ({
       style={{
         gridColumnStart: xPositionStart,
         gridColumnEnd: xPositionEnd,
+        gridRowStart: yPositionStart,
+        gridRowEnd: yPositionEnd,
       }}
     ></div>
   );
