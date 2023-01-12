@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Snake } from "../components";
 // @ts-ignore
 import useKeypress from "react-use-keypress";
+import { useInterval } from "usehooks-ts";
 
 const GameBoard = () => {
   const [grid, setGrid] = useState<{
@@ -15,22 +16,22 @@ const GameBoard = () => {
       if (e.key === "ArrowUp") {
         setGrid((prev) => ({
           ...prev,
-          rowNum: prev.rowNum - 1,
+          rowNum: prev.rowNum <= 1 ? 10 : prev.rowNum - 1,
         }));
       } else if (e.key === "ArrowDown") {
         setGrid((prev) => ({
           ...prev,
-          rowNum: prev.rowNum + 1,
+          rowNum: prev.rowNum >= 20 ? 10 : prev.rowNum + 1,
         }));
       } else if (e.key === "ArrowLeft") {
         setGrid((prev) => ({
           ...prev,
-          colNum: prev.colNum - 1,
+          colNum: prev.colNum <= 1 ? 15 : prev.colNum - 1,
         }));
       } else if (e.key === "ArrowRight") {
         setGrid((prev) => ({
           ...prev,
-          colNum: prev.colNum + 1,
+          colNum: prev.colNum >= 30 ? 15 : prev.colNum + 1,
         }));
       }
     }
