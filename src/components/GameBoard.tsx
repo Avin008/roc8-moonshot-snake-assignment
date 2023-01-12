@@ -10,32 +10,48 @@ const GameBoard = () => {
     rowNum: number;
   }>({ colNum: 15, rowNum: 10 });
 
+  const [lastKeyPressed, setLastKeyPressed] = useState<
+    "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
+  >("ArrowUp");
+
   useKeypress(
     ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
     (e: React.KeyboardEvent) => {
       if (e.key === "ArrowUp") {
-        setGrid((prev) => ({
-          ...prev,
-          rowNum: prev.rowNum <= 1 ? 10 : prev.rowNum - 1,
-        }));
+        setLastKeyPressed("ArrowUp");
       } else if (e.key === "ArrowDown") {
-        setGrid((prev) => ({
-          ...prev,
-          rowNum: prev.rowNum >= 20 ? 10 : prev.rowNum + 1,
-        }));
+        setLastKeyPressed("ArrowDown");
       } else if (e.key === "ArrowLeft") {
-        setGrid((prev) => ({
-          ...prev,
-          colNum: prev.colNum <= 1 ? 15 : prev.colNum - 1,
-        }));
+        setLastKeyPressed("ArrowLeft");
       } else if (e.key === "ArrowRight") {
-        setGrid((prev) => ({
-          ...prev,
-          colNum: prev.colNum >= 30 ? 15 : prev.colNum + 1,
-        }));
+        setLastKeyPressed("ArrowRight");
       }
     }
   );
+
+  useInterval(() => {
+    if (lastKeyPressed === "ArrowUp") {
+      setGrid((prev) => ({
+        ...prev,
+        rowNum: prev.rowNum - 1,
+      }));
+    } else if (lastKeyPressed === "ArrowDown") {
+      setGrid((prev) => ({
+        ...prev,
+        rowNum: prev.rowNum + 1,
+      }));
+    } else if (lastKeyPressed === "ArrowLeft") {
+      setGrid((prev) => ({
+        ...prev,
+        colNum: prev.colNum - 1,
+      }));
+    } else if (lastKeyPressed === "ArrowRight") {
+      setGrid((prev) => ({
+        ...prev,
+        colNum: prev.colNum + 1,
+      }));
+    }
+  }, 1000);
 
   return (
     <div className="border border-black w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
