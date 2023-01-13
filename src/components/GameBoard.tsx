@@ -114,7 +114,17 @@ const GameBoard = () => {
         })
       );
     }
-  }, 1000);
+
+    if (
+      grid[0].colNum === food.colNum &&
+      grid[0].rowNum === food.rowNum
+    ) {
+      setFood({
+        colNum: Math.floor(Math.random() * 30),
+        rowNum: Math.floor(Math.random() * 20),
+      });
+    }
+  }, 500);
 
   useInterval(
     () => {
