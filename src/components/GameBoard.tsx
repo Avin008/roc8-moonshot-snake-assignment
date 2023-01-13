@@ -14,6 +14,9 @@ const GameBoard = () => {
     { colNum: 15, rowNum: 10 },
     { colNum: 15, rowNum: 11 },
     { colNum: 15, rowNum: 12 },
+    { colNum: 15, rowNum: 13 },
+    { colNum: 15, rowNum: 14 },
+    { colNum: 15, rowNum: 15 },
   ]);
 
   const [lastKeyPressed, setLastKeyPressed] = useState<
@@ -47,39 +50,58 @@ const GameBoard = () => {
     }
   );
 
+  const FollowHead = (
+    grid: { colNum: number; rowNum: number }[]
+  ) => {
+    const newGrid = [...grid];
+
+    for (let x = newGrid.length - 2; x >= 0; x--) {
+      newGrid[x + 1] = { ...newGrid[x] };
+    }
+    return newGrid;
+  };
+
   useInterval(() => {
     if (lastKeyPressed === "ArrowUp") {
-      setGrid((prev) => {
-        return prev.map((x, index) => {
+      setGrid(
+        [...FollowHead(grid)].map((x, index) => {
           if (index === 0) {
             return { ...x, rowNum: x.rowNum - 1 };
-          } else return x;
-        });
-      });
+          } else {
+            return x;
+          }
+        })
+      );
     } else if (lastKeyPressed === "ArrowDown") {
-      setGrid((prev) => {
-        return prev.map((x, index) => {
+      setGrid(
+        [...FollowHead(grid)].map((x, index) => {
           if (index === 0) {
             return { ...x, rowNum: x.rowNum + 1 };
-          } else return x;
-        });
-      });
+          } else {
+            return x;
+          }
+        })
+      );
     } else if (lastKeyPressed === "ArrowLeft") {
-      setGrid((prev) => {
-        return prev.map((x, index) => {
+      setGrid(
+        [...FollowHead(grid)].map((x, index) => {
           if (index === 0) {
             return { ...x, colNum: x.colNum - 1 };
-          } else return x;
-        });
-      });
+          } else {
+            return x;
+          }
+        })
+      );
     } else if (lastKeyPressed === "ArrowRight") {
-      setGrid((prev) => {
-        return prev.map((x, index) => {
+      setGrid(
+        [...FollowHead(grid)].map((x, index) => {
           if (index === 0) {
             return { ...x, colNum: x.colNum + 1 };
-          } else return x;
-        });
-      });
+          } else {
+            return x;
+          }
+        })
+      );
     }
   }, 1000);
 
