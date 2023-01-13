@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Snake } from "../components";
+import { Food, Snake } from "../components";
 // @ts-ignore
 import useKeypress from "react-use-keypress";
 import { useInterval } from "usehooks-ts";
@@ -18,6 +18,17 @@ const GameBoard = () => {
     { colNum: 15, rowNum: 14 },
     { colNum: 15, rowNum: 15 },
   ]);
+
+  const [food, setFood] = useState<{
+    colNum: number;
+    rowNum: number;
+  }>({
+    colNum: Math.floor(Math.random() * 30),
+    rowNum: Math.floor(Math.random() * 20),
+  });
+
+  const [displayFood, setDisplayFood] =
+    useState<boolean>(false);
 
   const [lastKeyPressed, setLastKeyPressed] = useState<
     "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
@@ -105,6 +116,20 @@ const GameBoard = () => {
     }
   }, 1000);
 
+  useInterval(
+    () => {
+      setDisplayFood(true);
+    },
+    displayFood ? null : 3000
+  );
+
+  useInterval(() => {
+    setFood({
+      colNum: Math.floor(Math.random() * 30),
+      rowNum: Math.floor(Math.random() * 20),
+    });
+  }, 50000);
+
   return (
     <div className="border border-black w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
       {grid.map((snakePosition) => (
@@ -113,6 +138,12 @@ const GameBoard = () => {
           yposition={snakePosition.rowNum}
         />
       ))}
+      {displayFood && (
+        <Food
+          xPosition={food.colNum}
+          yPosition={food.rowNum}
+        />
+      )}
     </div>
   );
 };
