@@ -14,7 +14,6 @@ const GameBoard = () => {
     { colNum: 15, rowNum: 10 },
     { colNum: 15, rowNum: 11 },
     { colNum: 15, rowNum: 12 },
-    { colNum: 15, rowNum: 13 },
   ]);
 
   const [lastKeyPressed, setLastKeyPressed] = useState<
@@ -50,24 +49,37 @@ const GameBoard = () => {
 
   useInterval(() => {
     if (lastKeyPressed === "ArrowUp") {
-      setGrid((prev) =>
-        prev.map((x) => ({
-          ...x,
-          rowNum: x.rowNum - 1,
-        }))
-      );
+      setGrid((prev) => {
+        return prev.map((x, index) => {
+          if (index === 0) {
+            return { ...x, rowNum: x.rowNum - 1 };
+          } else return x;
+        });
+      });
     } else if (lastKeyPressed === "ArrowDown") {
-      setGrid((prev) =>
-        prev.map((x) => ({ ...x, rowNum: x.rowNum + 1 }))
-      );
+      setGrid((prev) => {
+        return prev.map((x, index) => {
+          if (index === 0) {
+            return { ...x, rowNum: x.rowNum + 1 };
+          } else return x;
+        });
+      });
     } else if (lastKeyPressed === "ArrowLeft") {
-      setGrid((prev) =>
-        prev.map((x) => ({ ...x, colNum: x.colNum - 1 }))
-      );
+      setGrid((prev) => {
+        return prev.map((x, index) => {
+          if (index === 0) {
+            return { ...x, colNum: x.colNum - 1 };
+          } else return x;
+        });
+      });
     } else if (lastKeyPressed === "ArrowRight") {
-      setGrid((prev) =>
-        prev.map((x) => ({ ...x, colNum: x.colNum + 1 }))
-      );
+      setGrid((prev) => {
+        return prev.map((x, index) => {
+          if (index === 0) {
+            return { ...x, colNum: x.colNum + 1 };
+          } else return x;
+        });
+      });
     }
   }, 1000);
 
