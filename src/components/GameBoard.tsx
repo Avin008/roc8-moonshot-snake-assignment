@@ -24,13 +24,25 @@ const GameBoard = () => {
   useKeypress(
     ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
     (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowUp") {
+      if (
+        e.key === "ArrowUp" &&
+        lastKeyPressed !== "ArrowDown"
+      ) {
         setLastKeyPressed("ArrowUp");
-      } else if (e.key === "ArrowDown") {
+      } else if (
+        e.key === "ArrowDown" &&
+        lastKeyPressed !== "ArrowUp"
+      ) {
         setLastKeyPressed("ArrowDown");
-      } else if (e.key === "ArrowLeft") {
+      } else if (
+        e.key === "ArrowLeft" &&
+        lastKeyPressed !== "ArrowRight"
+      ) {
         setLastKeyPressed("ArrowLeft");
-      } else if (e.key === "ArrowRight") {
+      } else if (
+        e.key === "ArrowRight" &&
+        lastKeyPressed !== "ArrowLeft"
+      ) {
         setLastKeyPressed("ArrowRight");
       }
     }
