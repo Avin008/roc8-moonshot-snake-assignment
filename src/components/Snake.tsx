@@ -1,22 +1,16 @@
 const Snake = ({
-  xPositionStart,
-  xPositionEnd,
-  yPositionStart,
-  yPositionEnd,
+  xposition,
+  yposition,
 }: {
-  xPositionStart: number;
-  xPositionEnd: number;
-  yPositionStart: number;
-  yPositionEnd: number;
+  xposition: number;
+  yposition: number;
 }) => {
   return (
     <div
-      className="bg-black"
+      className="bg-black border border-blue-600"
       style={{
-        gridColumnStart: xPositionStart,
-        gridColumnEnd: xPositionEnd,
-        gridRowStart: yPositionStart,
-        gridRowEnd: yPositionEnd,
+        gridColumnStart: xposition,
+        gridRowStart: yposition,
       }}
     ></div>
   );
