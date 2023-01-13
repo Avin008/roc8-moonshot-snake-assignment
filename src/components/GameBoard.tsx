@@ -30,6 +30,8 @@ const GameBoard = () => {
   const [displayFood, setDisplayFood] =
     useState<boolean>(false);
 
+  const [score, setScore] = useState<number>(0);
+
   const [lastKeyPressed, setLastKeyPressed] = useState<
     "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
   >("ArrowUp");
@@ -122,9 +124,10 @@ const GameBoard = () => {
       grid[0].rowNum <= food.rowNum
     ) {
       setFood({
-        colNum: Math.floor(Math.random() * 30),
-        rowNum: Math.floor(Math.random() * 20),
+        colNum: Math.floor(Math.random() * 30) + 1,
+        rowNum: Math.floor(Math.random() * 20) + 1,
       });
+      setScore((prev) => prev + 1);
     }
   }, 300);
 
@@ -137,8 +140,8 @@ const GameBoard = () => {
 
   useInterval(() => {
     setFood({
-      colNum: Math.floor(Math.random() * 30),
-      rowNum: Math.floor(Math.random() * 20),
+      colNum: Math.floor(Math.random() * 30) + 1,
+      rowNum: Math.floor(Math.random() * 20) + 1,
     });
   }, 50000);
 
