@@ -13,10 +13,6 @@ const GameBoard = () => {
   >([
     { colNum: 15, rowNum: 10 },
     { colNum: 15, rowNum: 11 },
-    { colNum: 15, rowNum: 12 },
-    { colNum: 15, rowNum: 13 },
-    { colNum: 15, rowNum: 14 },
-    { colNum: 15, rowNum: 15 },
   ]);
 
   const [food, setFood] = useState<{
@@ -131,12 +127,14 @@ const GameBoard = () => {
           colNum: Math.floor(Math.random() * 30) + 1,
           rowNum: Math.floor(Math.random() * 20) + 1,
         });
+        setDisplayFood(false);
         setScore((prev) => prev + 1);
+        const lastSlice = { ...[...grid].slice(-1) };
         setGrid((prev) => [
           ...prev,
           {
-            colNum: prev[-1 + 1].colNum,
-            rowNum: prev[-1 + 1].rowNum,
+            colNum: lastSlice[0].colNum + 1,
+            rowNum: lastSlice[0].rowNum + 1,
           },
         ]);
       }
@@ -149,6 +147,18 @@ const GameBoard = () => {
       ) {
         setIsGameOver(true);
       }
+
+      const head = { ...grid[0] };
+      const body = [...grid].slice(3);
+      body.forEach((x) => {
+        if (
+          x.colNum === head.colNum &&
+          x.rowNum === head.rowNum
+        ) {
+          setIsGameOver(true);
+          setGrid(grid);
+        }
+      });
     },
     isGameOver ? null : 300
   );
