@@ -142,10 +142,10 @@ const GameBoard = () => {
       }
 
       if (
-        grid[0].rowNum <= 1 ||
-        grid[0].rowNum >= 20 ||
-        grid[0].colNum <= 1 ||
-        grid[0].colNum >= 30
+        grid[0].rowNum < 1 ||
+        grid[0].rowNum > 20 ||
+        grid[0].colNum < 1 ||
+        grid[0].colNum > 30
       ) {
         setIsGameOver(true);
       }
