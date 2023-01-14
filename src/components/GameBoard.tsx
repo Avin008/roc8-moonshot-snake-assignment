@@ -32,6 +32,9 @@ const GameBoard = () => {
 
   const [score, setScore] = useState<number>(0);
 
+  const [isGameOver, setIsGameOver] =
+    useState<boolean>(false);
+
   const [lastKeyPressed, setLastKeyPressed] = useState<
     "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
   >("ArrowUp");
@@ -74,69 +77,81 @@ const GameBoard = () => {
     return newGrid;
   };
 
-  useInterval(() => {
-    if (lastKeyPressed === "ArrowUp") {
-      setGrid(
-        [...FollowHead(grid)].map((x, index) => {
-          if (index === 0) {
-            return { ...x, rowNum: x.rowNum - 1 };
-          } else {
-            return x;
-          }
-        })
-      );
-    } else if (lastKeyPressed === "ArrowDown") {
-      setGrid(
-        [...FollowHead(grid)].map((x, index) => {
-          if (index === 0) {
-            return { ...x, rowNum: x.rowNum + 1 };
-          } else {
-            return x;
-          }
-        })
-      );
-    } else if (lastKeyPressed === "ArrowLeft") {
-      setGrid(
-        [...FollowHead(grid)].map((x, index) => {
-          if (index === 0) {
-            return { ...x, colNum: x.colNum - 1 };
-          } else {
-            return x;
-          }
-        })
-      );
-    } else if (lastKeyPressed === "ArrowRight") {
-      setGrid(
-        [...FollowHead(grid)].map((x, index) => {
-          if (index === 0) {
-            return { ...x, colNum: x.colNum + 1 };
-          } else {
-            return x;
-          }
-        })
-      );
-    }
+  useInterval(
+    () => {
+      if (lastKeyPressed === "ArrowUp") {
+        setGrid(
+          [...FollowHead(grid)].map((x, index) => {
+            if (index === 0) {
+              return { ...x, rowNum: x.rowNum - 1 };
+            } else {
+              return x;
+            }
+          })
+        );
+      } else if (lastKeyPressed === "ArrowDown") {
+        setGrid(
+          [...FollowHead(grid)].map((x, index) => {
+            if (index === 0) {
+              return { ...x, rowNum: x.rowNum + 1 };
+            } else {
+              return x;
+            }
+          })
+        );
+      } else if (lastKeyPressed === "ArrowLeft") {
+        setGrid(
+          [...FollowHead(grid)].map((x, index) => {
+            if (index === 0) {
+              return { ...x, colNum: x.colNum - 1 };
+            } else {
+              return x;
+            }
+          })
+        );
+      } else if (lastKeyPressed === "ArrowRight") {
+        setGrid(
+          [...FollowHead(grid)].map((x, index) => {
+            if (index === 0) {
+              return { ...x, colNum: x.colNum + 1 };
+            } else {
+              return x;
+            }
+          })
+        );
+      }
 
-    if (
-      grid[0].colNum >= food.colNum &&
-      grid[0].rowNum >= food.rowNum &&
-      grid[0].colNum <= food.colNum &&
-      grid[0].rowNum <= food.rowNum
-    ) {
-      setFood({
-        colNum: Math.floor(Math.random() * 30) + 1,
-        rowNum: Math.floor(Math.random() * 20) + 1,
-      });
-      setScore((prev) => prev + 1);
-      setGrid((prev) => [
-        ...prev,
-        {
-          colNum: prev[-1 + 1].colNum,
-          rowNum: prev[-1 + 1].rowNum,
-        },
-      ]);
-    }
-  }, 300);
+      if (
+        grid[0].colNum >= food.colNum &&
+        grid[0].rowNum >= food.rowNum &&
+        grid[0].colNum <= food.colNum &&
+        grid[0].rowNum <= food.rowNum
+      ) {
+        setFood({
+          colNum: Math.floor(Math.random() * 30) + 1,
+          rowNum: Math.floor(Math.random() * 20) + 1,
+        });
+        setScore((prev) => prev + 1);
+        setGrid((prev) => [
+          ...prev,
+          {
+            colNum: prev[-1 + 1].colNum,
+            rowNum: prev[-1 + 1].rowNum,
+          },
+        ]);
+      }
+
+      if (
+        grid[0].rowNum <= 1 ||
+        grid[0].rowNum >= 20 ||
+        grid[0].colNum <= 1 ||
+        grid[0].colNum >= 30
+      ) {
+        setIsGameOver(true);
+      }
+    },
+    isGameOver ? null : 300
+  );
 
   useInterval(
     () => {
@@ -145,12 +160,15 @@ const GameBoard = () => {
     displayFood ? null : 3000
   );
 
-  useInterval(() => {
-    setFood({
-      colNum: Math.floor(Math.random() * 30) + 1,
-      rowNum: Math.floor(Math.random() * 20) + 1,
-    });
-  }, 50000);
+  useInterval(
+    () => {
+      setFood({
+        colNum: Math.floor(Math.random() * 30) + 1,
+        rowNum: Math.floor(Math.random() * 20) + 1,
+      });
+    },
+    isGameOver ? null : 50000
+  );
 
   return (
     <div className="border border-black w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
