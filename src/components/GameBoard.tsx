@@ -128,6 +128,13 @@ const GameBoard = () => {
         rowNum: Math.floor(Math.random() * 20) + 1,
       });
       setScore((prev) => prev + 1);
+      setGrid((prev) => [
+        ...prev,
+        {
+          colNum: prev[-1 + 1].colNum,
+          rowNum: prev[-1 + 1].rowNum,
+        },
+      ]);
     }
   }, 300);
 
