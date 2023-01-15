@@ -184,7 +184,7 @@ const GameBoard = () => {
   );
 
   return (
-    <div className="w-[40%] h-[65%] relative">
+    <div className="sm:w-[90%] md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
       <Scores playerScore={score} topScore={100} />
       <div className="dark:bg-slate-700 w-full h-full rounded-md grid grid-cols-30 grid-rows-20">
         {grid.map((snakePosition) => (
