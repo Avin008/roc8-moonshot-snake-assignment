@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Food, Snake } from "../components";
+import { Food, Scores, Snake } from "../components";
 // @ts-ignore
 import useKeypress from "react-use-keypress";
 import { useInterval } from "usehooks-ts";
@@ -184,20 +184,23 @@ const GameBoard = () => {
   );
 
   return (
-    <div className="border dark:bg-slate-700 rounded-md dark:border-white w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
-      {grid.map((snakePosition) => (
-        <Snake
-          key={crypto.randomUUID()}
-          xposition={snakePosition.colNum}
-          yposition={snakePosition.rowNum}
-        />
-      ))}
-      {displayFood && (
-        <Food
-          xPosition={food.colNum}
-          yPosition={food.rowNum}
-        />
-      )}
+    <div className="w-[40%] h-[65%] relative">
+      <Scores playerScore={score} topScore={100} />
+      <div className="dark:bg-slate-700 w-full h-full rounded-md grid grid-cols-30 grid-rows-20">
+        {grid.map((snakePosition) => (
+          <Snake
+            key={crypto.randomUUID()}
+            xposition={snakePosition.colNum}
+            yposition={snakePosition.rowNum}
+          />
+        ))}
+        {displayFood && (
+          <Food
+            xPosition={food.colNum}
+            yPosition={food.rowNum}
+          />
+        )}
+      </div>
     </div>
   );
 };

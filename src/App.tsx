@@ -27,7 +27,7 @@ function App() {
           darkMode={isDarkMode}
           darkModeSetter={darkModeSetter}
         />
-        {/* <GameBoard /> */}
+        <GameBoard />
         <MobileControls />
       </div>
     </div>
