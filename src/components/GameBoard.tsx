@@ -22,8 +22,8 @@ const GameBoard = () => {
     colNum: number;
     rowNum: number;
   }>({
-    colNum: Math.floor(Math.random() * 30),
-    rowNum: Math.floor(Math.random() * 20),
+    colNum: Math.floor(Math.random() * 30) + 1,
+    rowNum: Math.floor(Math.random() * 20) + 1,
   });
 
   const [displayFood, setDisplayFood] =
@@ -182,6 +182,8 @@ const GameBoard = () => {
     },
     isGameOver ? null : 50000
   );
+
+  console.log(food);
 
   return (
     <div className="sm:w-[90%] md:mt-14 md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
