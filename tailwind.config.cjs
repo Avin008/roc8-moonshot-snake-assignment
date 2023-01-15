@@ -8,6 +8,11 @@ module.exports = {
     fontFamily: {
       sans: ["Ubuntu", ...defaultTheme.fontFamily.sans],
     },
+    screens: {
+      sm: "100px",
+      md: "500px",
+      lg: "1000px",
+    },
     extend: {
       gridTemplateColumns: {
         30: "repeat(30, 1fr)",
