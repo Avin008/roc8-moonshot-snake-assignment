@@ -1,5 +1,15 @@
-import { GameBoard, Navbar } from "./components";
-import { MdDarkMode } from "react-icons/md";
+import {
+  GameBoard,
+  MobileControls,
+  Navbar,
+} from "./components";
+import {
+  MdArrowDownward,
+  MdArrowBack,
+  MdArrowRight,
+  MdArrowUpward,
+  MdEast,
+} from "react-icons/md";
 import { useState } from "react";
 
 function App() {
@@ -18,6 +28,7 @@ function App() {
           darkModeSetter={darkModeSetter}
         />
         {/* <GameBoard /> */}
+        <MobileControls />
       </div>
     </div>
   );
