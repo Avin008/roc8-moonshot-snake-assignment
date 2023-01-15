@@ -13,6 +13,9 @@ const GameBoard = () => {
   >([
     { colNum: 15, rowNum: 10 },
     { colNum: 15, rowNum: 11 },
+    { colNum: 15, rowNum: 12 },
+    { colNum: 15, rowNum: 13 },
+    { colNum: 15, rowNum: 14 },
   ]);
 
   const [food, setFood] = useState<{
