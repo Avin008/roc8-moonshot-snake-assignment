@@ -184,7 +184,7 @@ const GameBoard = () => {
   );
 
   return (
-    <div className="border border-black w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
+    <div className="border dark:bg-slate-700 rounded-md dark:border-white w-[40%] h-[70%] grid grid-cols-30 grid-rows-20">
       {grid.map((snakePosition) => (
         <Snake
           key={crypto.randomUUID()}

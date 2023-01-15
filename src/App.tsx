@@ -2,8 +2,8 @@ import { GameBoard } from "./components";
 
 function App() {
   return (
-    <div className="h-screen">
-      <div className="bg-white w-full h-full flex items-center justify-center">
+    <div className="h-screen dark">
+      <div className="dark:bg-slate-800 w-full h-full flex items-center justify-center">
         <GameBoard />
       </div>
     </div>

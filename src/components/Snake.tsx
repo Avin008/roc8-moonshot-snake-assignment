@@ -7,7 +7,7 @@ const Snake = ({
 }) => {
   return (
     <div
-      className="bg-black border border-blue-600"
+      className="dark:bg-indigo-500 bg-indigo-400 shadow-lg dark:border-white border-white border"
       style={{
         gridColumnStart: xposition,
         gridRowStart: yposition,
