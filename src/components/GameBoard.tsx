@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Food, Scores, Snake } from "../components";
-// @ts-ignore
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
-import {
-  getRandomFoodPosition,
-  followHead,
-} from "../utility";
+import { getRandomFoodPosition } from "../utility";
 import { useControls } from "../hooks";
+import {
+  moveSnakeDown,
+  moveSnakeLeft,
+  moveSnakeRight,
+  moveSnakeUp,
+} from "../utility/moveSnakeInDirections";
 
 const GameBoard = () => {
   const [grid, setGrid] = useState<
@@ -32,45 +34,13 @@ const GameBoard = () => {
   useInterval(
     () => {
       if (lastKeyPressed === "ArrowUp") {
-        setGrid(
-          [...followHead(grid)].map((x, index) => {
-            if (index === 0) {
-              return { ...x, rowNum: x.rowNum - 1 };
-            } else {
-              return x;
-            }
-          })
-        );
+        setGrid(moveSnakeUp(grid));
       } else if (lastKeyPressed === "ArrowDown") {
-        setGrid(
-          [...followHead(grid)].map((x, index) => {
-            if (index === 0) {
-              return { ...x, rowNum: x.rowNum + 1 };
-            } else {
-              return x;
-            }
-          })
-        );
+        setGrid(moveSnakeDown(grid));
       } else if (lastKeyPressed === "ArrowLeft") {
-        setGrid(
-          [...followHead(grid)].map((x, index) => {
-            if (index === 0) {
-              return { ...x, colNum: x.colNum - 1 };
-            } else {
-              return x;
-            }
-          })
-        );
+        setGrid(moveSnakeLeft(grid));
       } else if (lastKeyPressed === "ArrowRight") {
-        setGrid(
-          [...followHead(grid)].map((x, index) => {
-            if (index === 0) {
-              return { ...x, colNum: x.colNum + 1 };
-            } else {
-              return x;
-            }
-          })
-        );
+        setGrid(moveSnakeRight(grid));
       }
 
       if (
