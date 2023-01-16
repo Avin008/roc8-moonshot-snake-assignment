@@ -4,6 +4,7 @@ import { Food, Scores, Snake } from "../components";
 import useKeypress from "react-use-keypress";
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
+import { getRandomFoodPosition } from "../utility";
 
 const GameBoard = () => {
   const [grid, setGrid] = useState<
@@ -13,10 +14,7 @@ const GameBoard = () => {
   const [food, setFood] = useState<{
     colNum: number;
     rowNum: number;
-  }>({
-    colNum: Math.floor(Math.random() * 30) + 1,
-    rowNum: Math.floor(Math.random() * 20) + 1,
-  });
+  }>(getRandomFoodPosition(grid));
 
   const [displayFood, setDisplayFood] =
     useState<boolean>(false);
@@ -167,15 +165,10 @@ const GameBoard = () => {
 
   useInterval(
     () => {
-      setFood({
-        colNum: Math.floor(Math.random() * 30) + 1,
-        rowNum: Math.floor(Math.random() * 20) + 1,
-      });
+      setFood(getRandomFoodPosition(grid));
     },
     isGameOver ? null : 50000
   );
-
-  console.log(food);
 
   return (
     <div className="sm:w-[90%] md:mt-14 md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
