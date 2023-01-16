@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Food, Scores, Snake } from "../components";
 // @ts-ignore
-import useKeypress from "react-use-keypress";
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
 import { getRandomFoodPosition } from "../utility";
+import { useControls } from "../hooks";
 
 const GameBoard = () => {
   const [grid, setGrid] = useState<
@@ -24,36 +24,7 @@ const GameBoard = () => {
   const [isGameOver, setIsGameOver] =
     useState<boolean>(false);
 
-  const [lastKeyPressed, setLastKeyPressed] = useState<
-    "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight"
-  >("ArrowUp");
-
-  useKeypress(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
-    (e: React.KeyboardEvent) => {
-      if (
-        e.key === "ArrowUp" &&
-        lastKeyPressed !== "ArrowDown"
-      ) {
-        setLastKeyPressed("ArrowUp");
-      } else if (
-        e.key === "ArrowDown" &&
-        lastKeyPressed !== "ArrowUp"
-      ) {
-        setLastKeyPressed("ArrowDown");
-      } else if (
-        e.key === "ArrowLeft" &&
-        lastKeyPressed !== "ArrowRight"
-      ) {
-        setLastKeyPressed("ArrowLeft");
-      } else if (
-        e.key === "ArrowRight" &&
-        lastKeyPressed !== "ArrowLeft"
-      ) {
-        setLastKeyPressed("ArrowRight");
-      }
-    }
-  );
+  const { lastKeyPressed } = useControls();
 
   const FollowHead = (
     grid: { colNum: number; rowNum: number }[]
