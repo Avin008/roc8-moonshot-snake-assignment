@@ -3,7 +3,10 @@ import { Food, Scores, Snake } from "../components";
 // @ts-ignore
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
-import { getRandomFoodPosition } from "../utility";
+import {
+  getRandomFoodPosition,
+  followHead,
+} from "../utility";
 import { useControls } from "../hooks";
 
 const GameBoard = () => {
@@ -26,22 +29,11 @@ const GameBoard = () => {
 
   const { lastKeyPressed } = useControls();
 
-  const FollowHead = (
-    grid: { colNum: number; rowNum: number }[]
-  ) => {
-    const newGrid = [...grid];
-
-    for (let x = newGrid.length - 2; x >= 0; x--) {
-      newGrid[x + 1] = { ...newGrid[x] };
-    }
-    return newGrid;
-  };
-
   useInterval(
     () => {
       if (lastKeyPressed === "ArrowUp") {
         setGrid(
-          [...FollowHead(grid)].map((x, index) => {
+          [...followHead(grid)].map((x, index) => {
             if (index === 0) {
               return { ...x, rowNum: x.rowNum - 1 };
             } else {
@@ -51,7 +43,7 @@ const GameBoard = () => {
         );
       } else if (lastKeyPressed === "ArrowDown") {
         setGrid(
-          [...FollowHead(grid)].map((x, index) => {
+          [...followHead(grid)].map((x, index) => {
             if (index === 0) {
               return { ...x, rowNum: x.rowNum + 1 };
             } else {
@@ -61,7 +53,7 @@ const GameBoard = () => {
         );
       } else if (lastKeyPressed === "ArrowLeft") {
         setGrid(
-          [...FollowHead(grid)].map((x, index) => {
+          [...followHead(grid)].map((x, index) => {
             if (index === 0) {
               return { ...x, colNum: x.colNum - 1 };
             } else {
@@ -71,7 +63,7 @@ const GameBoard = () => {
         );
       } else if (lastKeyPressed === "ArrowRight") {
         setGrid(
-          [...FollowHead(grid)].map((x, index) => {
+          [...followHead(grid)].map((x, index) => {
             if (index === 0) {
               return { ...x, colNum: x.colNum + 1 };
             } else {
