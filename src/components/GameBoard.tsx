@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Food, Scores, Snake } from "../components";
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
-import { getRandomFoodPosition } from "../utility";
+import {
+  getRandomFoodPosition,
+  snakeCollisonWithWall,
+} from "../utility";
 import { useControls } from "../hooks";
 import {
   moveSnakeDown,
@@ -55,19 +58,6 @@ const GameBoard = () => {
     }
   };
 
-  const snakeCollisonWithWall = (
-    grid: { colNum: number; rowNum: number }[]
-  ) => {
-    if (
-      grid[0].rowNum < 1 ||
-      grid[0].rowNum > 20 ||
-      grid[0].colNum < 1 ||
-      grid[0].colNum > 30
-    ) {
-      setIsGameOver(true);
-    }
-  };
-
   const snakeCollisonWithBody = (
     grid: { colNum: number; rowNum: number }[]
   ) => {
@@ -98,7 +88,7 @@ const GameBoard = () => {
 
       grabFood(grid, food);
 
-      snakeCollisonWithWall(grid);
+      snakeCollisonWithWall(grid, setIsGameOver);
 
       snakeCollisonWithBody(grid);
     },
