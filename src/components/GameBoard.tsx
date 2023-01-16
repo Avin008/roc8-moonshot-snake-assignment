@@ -31,6 +31,59 @@ const GameBoard = () => {
 
   const { lastKeyPressed } = useControls();
 
+  const grabFood = (
+    grid: { colNum: number; rowNum: number }[],
+    food: { colNum: number; rowNum: number }
+  ) => {
+    if (
+      grid[0].colNum >= food.colNum &&
+      grid[0].rowNum >= food.rowNum &&
+      grid[0].colNum <= food.colNum &&
+      grid[0].rowNum <= food.rowNum
+    ) {
+      setFood(getRandomFoodPosition(grid));
+      setDisplayFood(false);
+      setScore((prev) => prev + 1);
+      const lastSlice = { ...[...grid].slice(-1) };
+      setGrid((prev) => [
+        ...prev,
+        {
+          colNum: lastSlice[0].colNum + 1,
+          rowNum: lastSlice[0].rowNum + 1,
+        },
+      ]);
+    }
+  };
+
+  const snakeCollisonWithWall = (
+    grid: { colNum: number; rowNum: number }[]
+  ) => {
+    if (
+      grid[0].rowNum < 1 ||
+      grid[0].rowNum > 20 ||
+      grid[0].colNum < 1 ||
+      grid[0].colNum > 30
+    ) {
+      setIsGameOver(true);
+    }
+  };
+
+  const snakeCollisonWithBody = (
+    grid: { colNum: number; rowNum: number }[]
+  ) => {
+    const head = { ...grid[0] };
+    const body = [...grid].slice(3);
+    body.forEach((x) => {
+      if (
+        x.colNum === head.colNum &&
+        x.rowNum === head.rowNum
+      ) {
+        setIsGameOver(true);
+        setGrid(grid);
+      }
+    });
+  };
+
   useInterval(
     () => {
       if (lastKeyPressed === "ArrowUp") {
@@ -43,50 +96,13 @@ const GameBoard = () => {
         setGrid(moveSnakeRight(grid));
       }
 
-      if (
-        grid[0].colNum >= food.colNum &&
-        grid[0].rowNum >= food.rowNum &&
-        grid[0].colNum <= food.colNum &&
-        grid[0].rowNum <= food.rowNum
-      ) {
-        setFood({
-          colNum: Math.floor(Math.random() * 30) + 1,
-          rowNum: Math.floor(Math.random() * 20) + 1,
-        });
-        setDisplayFood(false);
-        setScore((prev) => prev + 1);
-        const lastSlice = { ...[...grid].slice(-1) };
-        setGrid((prev) => [
-          ...prev,
-          {
-            colNum: lastSlice[0].colNum + 1,
-            rowNum: lastSlice[0].rowNum + 1,
-          },
-        ]);
-      }
+      grabFood(grid, food);
 
-      if (
-        grid[0].rowNum < 1 ||
-        grid[0].rowNum > 20 ||
-        grid[0].colNum < 1 ||
-        grid[0].colNum > 30
-      ) {
-        setIsGameOver(true);
-      }
+      snakeCollisonWithWall(grid);
 
-      const head = { ...grid[0] };
-      const body = [...grid].slice(3);
-      body.forEach((x) => {
-        if (
-          x.colNum === head.colNum &&
-          x.rowNum === head.rowNum
-        ) {
-          setIsGameOver(true);
-          setGrid(grid);
-        }
-      });
+      snakeCollisonWithBody(grid);
     },
-    isGameOver ? null : 300
+    isGameOver ? null : 150
   );
 
   useInterval(
