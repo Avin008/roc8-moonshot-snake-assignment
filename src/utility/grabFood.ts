@@ -44,8 +44,8 @@ const grabFood = ({
     setGrid((prev) => [
       ...prev,
       {
-        colNum: lastSlice[0].colNum + 1,
-        rowNum: lastSlice[0].rowNum + 1,
+        colNum: lastSlice[0].colNum,
+        rowNum: lastSlice[0].rowNum,
       },
     ]);
   }
