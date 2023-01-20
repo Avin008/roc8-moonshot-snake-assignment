@@ -63,11 +63,11 @@ const GameBoard = ({
         setScore,
       });
 
-      snakeCollisonWithWall(grid, setIsGameOver);
+      snakeCollisonWithWall(grid, setIsGameOver, setGrid);
 
       snakeCollisonWithBody(grid, setIsGameOver, setGrid);
     },
-    isGameOver ? null : 300
+    isGameOver ? null : 250
   );
 
   useInterval(
