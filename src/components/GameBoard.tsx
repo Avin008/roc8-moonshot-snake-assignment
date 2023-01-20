@@ -16,7 +16,15 @@ import {
   moveSnakeUp,
 } from "../utility/moveSnakeInDirections";
 
-const GameBoard = () => {
+const GameBoard = ({
+  lastKeyPressed,
+}: {
+  lastKeyPressed:
+    | "ArrowUp"
+    | "ArrowDown"
+    | "ArrowLeft"
+    | "ArrowRight";
+}) => {
   const [grid, setGrid] = useState<
     typeof INITIAL_SNAKE_POSITION
   >(INITIAL_SNAKE_POSITION);
@@ -33,8 +41,6 @@ const GameBoard = () => {
 
   const [isGameOver, setIsGameOver] =
     useState<boolean>(false);
-
-  const { lastKeyPressed } = useControls();
 
   useInterval(
     () => {
@@ -61,7 +67,7 @@ const GameBoard = () => {
 
       snakeCollisonWithBody(grid, setIsGameOver, setGrid);
     },
-    isGameOver ? null : 150
+    isGameOver ? null : 300
   );
 
   useInterval(
