@@ -21,14 +21,24 @@ import {
   moveSnakeUp,
 } from "../utility/moveSnakeInDirections";
 
+type LastKeyPressed =
+  | "ArrowUp"
+  | "ArrowDown"
+  | "ArrowLeft"
+  | "ArrowRight";
+
 const GameBoard = ({
   lastKeyPressed,
+  setLastKeyPressed,
 }: {
   lastKeyPressed:
     | "ArrowUp"
     | "ArrowDown"
     | "ArrowLeft"
     | "ArrowRight";
+  setLastKeyPressed: React.Dispatch<
+    React.SetStateAction<LastKeyPressed>
+  >;
 }) => {
   const [grid, setGrid] = useState<
     typeof INITIAL_SNAKE_POSITION
@@ -73,21 +83,33 @@ const GameBoard = ({
 
       snakeCollisonWithBody(grid, setIsGameOver, setGrid);
     },
-    isGameOver ? null : 250
+    isGameOver ? null : gameStatus ? 250 : null
   );
+
+  const resetGame = () => {
+    setGrid(INITIAL_SNAKE_POSITION);
+    setIsGameOver(false);
+    setDisplayFood(false);
+    setScore(0);
+    setLastKeyPressed("ArrowUp");
+  };
 
   useInterval(
     () => {
       setDisplayFood(true);
     },
-    displayFood ? null : 3000
+    gameStatus && !isGameOver
+      ? displayFood
+        ? null
+        : 3000
+      : null
   );
 
   useInterval(
     () => {
       setFood(getRandomFoodPosition(grid));
     },
-    isGameOver ? null : 50000
+    isGameOver ? null : gameStatus ? 50000 : null
   );
 
   return (
@@ -115,7 +137,8 @@ const GameBoard = ({
         <GameOverScreen
           yourScore={score}
           topScore={100}
-          setGameStatus={setIsGameOver}
+          setGameStatus={setGameStatus}
+          resetGame={resetGame}
         />
       )}
     </div>

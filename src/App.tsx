@@ -24,7 +24,10 @@ function App() {
           darkMode={isDarkMode}
           darkModeSetter={darkModeSetter}
         />
-        <GameBoard lastKeyPressed={lastKeyPressed} />
+        <GameBoard
+          lastKeyPressed={lastKeyPressed}
+          setLastKeyPressed={setLastKeyPressed}
+        />
         <MobileControls
           setLastKeyPressed={setLastKeyPressed}
           lastKeyPressed={lastKeyPressed}
