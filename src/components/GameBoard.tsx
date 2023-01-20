@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Food, Scores, Snake } from "../components";
+import {
+  Food,
+  GameOverScreen,
+  Scores,
+  Snake,
+  StartGameButton,
+} from "../components";
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
 import {
@@ -8,7 +14,6 @@ import {
   grabFood,
   snakeCollisonWithBody,
 } from "../utility";
-import { useControls } from "../hooks";
 import {
   moveSnakeDown,
   moveSnakeLeft,
@@ -16,7 +21,25 @@ import {
   moveSnakeUp,
 } from "../utility/moveSnakeInDirections";
 
-const GameBoard = () => {
+type LastKeyPressed =
+  | "ArrowUp"
+  | "ArrowDown"
+  | "ArrowLeft"
+  | "ArrowRight";
+
+const GameBoard = ({
+  lastKeyPressed,
+  setLastKeyPressed,
+}: {
+  lastKeyPressed:
+    | "ArrowUp"
+    | "ArrowDown"
+    | "ArrowLeft"
+    | "ArrowRight";
+  setLastKeyPressed: React.Dispatch<
+    React.SetStateAction<LastKeyPressed>
+  >;
+}) => {
   const [grid, setGrid] = useState<
     typeof INITIAL_SNAKE_POSITION
   >(INITIAL_SNAKE_POSITION);
@@ -30,11 +53,10 @@ const GameBoard = () => {
     useState<boolean>(false);
 
   const [score, setScore] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState(false);
 
   const [isGameOver, setIsGameOver] =
     useState<boolean>(false);
-
-  const { lastKeyPressed } = useControls();
 
   useInterval(
     () => {
@@ -57,29 +79,41 @@ const GameBoard = () => {
         setScore,
       });
 
-      snakeCollisonWithWall(grid, setIsGameOver);
+      snakeCollisonWithWall(grid, setIsGameOver, setGrid);
 
       snakeCollisonWithBody(grid, setIsGameOver, setGrid);
     },
-    isGameOver ? null : 150
+    isGameOver ? null : gameStatus ? 250 : null
   );
+
+  const resetGame = () => {
+    setGrid(INITIAL_SNAKE_POSITION);
+    setIsGameOver(false);
+    setDisplayFood(false);
+    setScore(0);
+    setLastKeyPressed("ArrowUp");
+  };
 
   useInterval(
     () => {
       setDisplayFood(true);
     },
-    displayFood ? null : 3000
+    gameStatus && !isGameOver
+      ? displayFood
+        ? null
+        : 3000
+      : null
   );
 
   useInterval(
     () => {
       setFood(getRandomFoodPosition(grid));
     },
-    isGameOver ? null : 50000
+    isGameOver ? null : gameStatus ? 50000 : null
   );
 
   return (
-    <div className="sm:w-[90%] md:mt-14 md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
+    <div className="sm:w-[90%] md:mt-14  md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
       <Scores playerScore={score} topScore={100} />
       <div className="dark:bg-slate-700 bg-gray-100 w-full h-full rounded-md grid grid-cols-30 grid-rows-20">
         {grid.map((snakePosition) => (
@@ -96,6 +130,17 @@ const GameBoard = () => {
           />
         )}
       </div>
+      {!gameStatus && (
+        <StartGameButton setGameStatus={setGameStatus} />
+      )}
+      {isGameOver && (
+        <GameOverScreen
+          yourScore={score}
+          topScore={100}
+          setGameStatus={setGameStatus}
+          resetGame={resetGame}
+        />
+      )}
     </div>
   );
 };

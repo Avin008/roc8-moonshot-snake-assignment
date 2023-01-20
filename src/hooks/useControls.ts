@@ -38,7 +38,7 @@ const useControls = () => {
       }
     }
   );
-  return { lastKeyPressed };
+  return { lastKeyPressed, setLastKeyPressed };
 };
 
 export default useControls;

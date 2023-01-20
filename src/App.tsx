@@ -4,6 +4,7 @@ import {
   Navbar,
 } from "./components";
 import { useState } from "react";
+import { useControls } from "./hooks";
 
 function App() {
   const [isDarkMode, setIsDarkMode] =
@@ -13,6 +14,9 @@ function App() {
     setIsDarkMode((prev) => !prev);
   };
 
+  const { lastKeyPressed, setLastKeyPressed } =
+    useControls();
+
   return (
     <div className={`h-screen ${isDarkMode && "dark"}`}>
       <div className="dark:bg-slate-800 w-full h-full flex items-center justify-center">
@@ -20,8 +24,14 @@ function App() {
           darkMode={isDarkMode}
           darkModeSetter={darkModeSetter}
         />
-        <GameBoard />
-        <MobileControls />
+        <GameBoard
+          lastKeyPressed={lastKeyPressed}
+          setLastKeyPressed={setLastKeyPressed}
+        />
+        <MobileControls
+          setLastKeyPressed={setLastKeyPressed}
+          lastKeyPressed={lastKeyPressed}
+        />
       </div>
     </div>
   );
