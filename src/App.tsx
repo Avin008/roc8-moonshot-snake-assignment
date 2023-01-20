@@ -1,8 +1,28 @@
+import {
+  GameBoard,
+  MobileControls,
+  Navbar,
+} from "./components";
+import { useState } from "react";
+
 function App() {
+  const [isDarkMode, setIsDarkMode] =
+    useState<boolean>(true);
+
+  const darkModeSetter = (): void => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
-    <div className="flex items-center flex-col justify-center h-screen">
-      <h1 className="text-3xl">Hello World</h1>
-      <h1>This is where the magic happens</h1>
+    <div className={`h-screen ${isDarkMode && "dark"}`}>
+      <div className="dark:bg-slate-800 w-full h-full flex items-center justify-center">
+        <Navbar
+          darkMode={isDarkMode}
+          darkModeSetter={darkModeSetter}
+        />
+        <GameBoard />
+        <MobileControls />
+      </div>
     </div>
   );
 }
