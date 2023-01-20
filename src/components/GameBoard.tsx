@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Food, Scores, Snake } from "../components";
+import {
+  Food,
+  GameOverScreen,
+  Scores,
+  Snake,
+  StartGameButton,
+} from "../components";
 import { useInterval } from "usehooks-ts";
 import { INITIAL_SNAKE_POSITION } from "../constants";
 import {
@@ -8,7 +14,6 @@ import {
   grabFood,
   snakeCollisonWithBody,
 } from "../utility";
-import { useControls } from "../hooks";
 import {
   moveSnakeDown,
   moveSnakeLeft,
@@ -38,6 +43,7 @@ const GameBoard = ({
     useState<boolean>(false);
 
   const [score, setScore] = useState<number>(0);
+  const [gameStatus, setGameStatus] = useState(false);
 
   const [isGameOver, setIsGameOver] =
     useState<boolean>(false);
@@ -85,7 +91,7 @@ const GameBoard = ({
   );
 
   return (
-    <div className="sm:w-[90%] md:mt-14 md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
+    <div className="sm:w-[90%] md:mt-14  md:w-[60%] md:h-[65%] sm:h-[45%] lg:w-[40%] lg:h-[65%] relative">
       <Scores playerScore={score} topScore={100} />
       <div className="dark:bg-slate-700 bg-gray-100 w-full h-full rounded-md grid grid-cols-30 grid-rows-20">
         {grid.map((snakePosition) => (
@@ -102,6 +108,16 @@ const GameBoard = ({
           />
         )}
       </div>
+      {!gameStatus && (
+        <StartGameButton setGameStatus={setGameStatus} />
+      )}
+      {isGameOver && (
+        <GameOverScreen
+          yourScore={score}
+          topScore={100}
+          setGameStatus={setIsGameOver}
+        />
+      )}
     </div>
   );
 };
