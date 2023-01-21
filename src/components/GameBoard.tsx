@@ -18,22 +18,13 @@ import {
   moveSnakeRight,
   moveSnakeUp,
 } from "../utility";
-
-type LastKeyPressed =
-  | "ArrowUp"
-  | "ArrowDown"
-  | "ArrowLeft"
-  | "ArrowRight";
+import { GRID, LastKeyPressed } from "../types";
 
 const GameBoard = ({
   lastKeyPressed,
   setLastKeyPressed,
 }: {
-  lastKeyPressed:
-    | "ArrowUp"
-    | "ArrowDown"
-    | "ArrowLeft"
-    | "ArrowRight";
+  lastKeyPressed: LastKeyPressed;
   setLastKeyPressed: React.Dispatch<
     React.SetStateAction<LastKeyPressed>
   >;
@@ -42,10 +33,9 @@ const GameBoard = ({
     typeof INITIAL_SNAKE_POSITION
   >(INITIAL_SNAKE_POSITION);
 
-  const [food, setFood] = useState<{
-    colNum: number;
-    rowNum: number;
-  }>(getRandomFoodPosition(grid));
+  const [food, setFood] = useState<GRID>(
+    getRandomFoodPosition(grid)
+  );
 
   const [displayFood, setDisplayFood] =
     useState<boolean>(false);
