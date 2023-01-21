@@ -1,10 +1,6 @@
-const Food = ({
-  xPosition,
-  yPosition,
-}: {
-  xPosition: number;
-  yPosition: number;
-}) => {
+import { FoodProps } from "../types";
+
+const Food = ({ xPosition, yPosition }: FoodProps) => {
   return (
     <div
       className="bg-yellow-300 border-black border"

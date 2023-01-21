@@ -6,36 +6,25 @@ import {
   Snake,
   StartGameButton,
 } from "../components";
-import { useInterval } from "usehooks-ts";
-import { INITIAL_SNAKE_POSITION } from "../constants";
 import {
   getRandomFoodPosition,
   snakeCollisonWithWall,
   grabFood,
   snakeCollisonWithBody,
-} from "../utility";
-import {
   moveSnakeDown,
   moveSnakeLeft,
   moveSnakeRight,
   moveSnakeUp,
-} from "../utility/moveSnakeInDirections";
-
-type LastKeyPressed =
-  | "ArrowUp"
-  | "ArrowDown"
-  | "ArrowLeft"
-  | "ArrowRight";
+} from "../utility";
+import { useInterval } from "usehooks-ts";
+import { INITIAL_SNAKE_POSITION } from "../constants";
+import { GRID, LastKeyPressed } from "../types";
 
 const GameBoard = ({
   lastKeyPressed,
   setLastKeyPressed,
 }: {
-  lastKeyPressed:
-    | "ArrowUp"
-    | "ArrowDown"
-    | "ArrowLeft"
-    | "ArrowRight";
+  lastKeyPressed: LastKeyPressed;
   setLastKeyPressed: React.Dispatch<
     React.SetStateAction<LastKeyPressed>
   >;
@@ -44,10 +33,9 @@ const GameBoard = ({
     typeof INITIAL_SNAKE_POSITION
   >(INITIAL_SNAKE_POSITION);
 
-  const [food, setFood] = useState<{
-    colNum: number;
-    rowNum: number;
-  }>(getRandomFoodPosition(grid));
+  const [food, setFood] = useState<GRID>(
+    getRandomFoodPosition(grid)
+  );
 
   const [displayFood, setDisplayFood] =
     useState<boolean>(false);
@@ -119,8 +107,8 @@ const GameBoard = ({
         {grid.map((snakePosition) => (
           <Snake
             key={crypto.randomUUID()}
-            xposition={snakePosition.colNum}
-            yposition={snakePosition.rowNum}
+            xPosition={snakePosition.colNum}
+            yPosition={snakePosition.rowNum}
           />
         ))}
         {displayFood && (
@@ -137,7 +125,6 @@ const GameBoard = ({
         <GameOverScreen
           yourScore={score}
           topScore={100}
-          setGameStatus={setGameStatus}
           resetGame={resetGame}
         />
       )}
