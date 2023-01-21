@@ -1,16 +1,10 @@
+import { GameOverScreenProps } from "../types";
+
 const GameOverScreen = ({
-  setGameStatus,
   yourScore,
   topScore,
   resetGame,
-}: {
-  setGameStatus: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
-  yourScore: number;
-  topScore: number;
-  resetGame: () => void;
-}) => {
+}: GameOverScreenProps) => {
   return (
     <div className="border flex items-center justify-center flex-col absolute top-0 bottom-0 left-0 right-0 bg-black/70">
       <div className="text-white font-medium flex gap-5">

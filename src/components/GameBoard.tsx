@@ -125,7 +125,6 @@ const GameBoard = ({
         <GameOverScreen
           yourScore={score}
           topScore={100}
-          setGameStatus={setGameStatus}
           resetGame={resetGame}
         />
       )}
