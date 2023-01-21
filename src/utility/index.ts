@@ -4,6 +4,12 @@ import getRandomGridPosition from "./getRandomGridPosition";
 import grabFood from "./grabFood";
 import snakeCollisonWithBody from "./snakeCollisonWithBody";
 import snakeCollisonWithWall from "./snakeCollisonWithWall";
+import {
+  moveSnakeDown,
+  moveSnakeLeft,
+  moveSnakeRight,
+  moveSnakeUp,
+} from "./moveSnakeInDirections";
 
 export {
   getRandomFoodPosition,
@@ -12,4 +18,8 @@ export {
   snakeCollisonWithWall,
   grabFood,
   snakeCollisonWithBody,
+  moveSnakeDown,
+  moveSnakeLeft,
+  moveSnakeRight,
+  moveSnakeUp,
 };

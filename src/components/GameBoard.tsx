@@ -13,13 +13,11 @@ import {
   snakeCollisonWithWall,
   grabFood,
   snakeCollisonWithBody,
-} from "../utility";
-import {
   moveSnakeDown,
   moveSnakeLeft,
   moveSnakeRight,
   moveSnakeUp,
-} from "../utility/moveSnakeInDirections";
+} from "../utility";
 
 type LastKeyPressed =
   | "ArrowUp"
