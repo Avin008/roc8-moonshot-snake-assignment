@@ -6,8 +6,6 @@ import {
   Snake,
   StartGameButton,
 } from "../components";
-import { useInterval } from "usehooks-ts";
-import { INITIAL_SNAKE_POSITION } from "../constants";
 import {
   getRandomFoodPosition,
   snakeCollisonWithWall,
@@ -18,6 +16,8 @@ import {
   moveSnakeRight,
   moveSnakeUp,
 } from "../utility";
+import { useInterval } from "usehooks-ts";
+import { INITIAL_SNAKE_POSITION } from "../constants";
 import { GRID, LastKeyPressed } from "../types";
 
 const GameBoard = ({
