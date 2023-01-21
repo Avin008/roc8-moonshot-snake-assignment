@@ -71,7 +71,7 @@ const GameBoard = ({
 
       snakeCollisonWithBody(grid, setIsGameOver, setGrid);
     },
-    isGameOver ? null : gameStatus ? 250 : null
+    isGameOver ? null : gameStatus ? 200 : null
   );
 
   const resetGame = () => {
