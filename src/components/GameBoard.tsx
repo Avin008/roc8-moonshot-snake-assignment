@@ -107,8 +107,8 @@ const GameBoard = ({
         {grid.map((snakePosition) => (
           <Snake
             key={crypto.randomUUID()}
-            xposition={snakePosition.colNum}
-            yposition={snakePosition.rowNum}
+            xPosition={snakePosition.colNum}
+            yPosition={snakePosition.rowNum}
           />
         ))}
         {displayFood && (

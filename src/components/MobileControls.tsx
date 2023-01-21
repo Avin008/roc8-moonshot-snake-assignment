@@ -4,21 +4,19 @@ import {
   MdArrowDownward,
   MdArrowUpward,
 } from "react-icons/md";
-type LastKeyPressed =
-  | "ArrowUp"
-  | "ArrowDown"
-  | "ArrowLeft"
-  | "ArrowRight";
+import { LastKeyPressed } from "../types";
 
-const MobileControls = ({
-  setLastKeyPressed,
-  lastKeyPressed,
-}: {
+type MobileControlsProps = {
   setLastKeyPressed: React.Dispatch<
     React.SetStateAction<LastKeyPressed>
   >;
   lastKeyPressed: LastKeyPressed;
-}) => {
+};
+
+const MobileControls = ({
+  setLastKeyPressed,
+  lastKeyPressed,
+}: MobileControlsProps) => {
   return (
     <ul className="fixed sm:visible lg:hidden border-t shadow-md dark:border-gray-600 dark:text-white bottom-0 items-center flex justify-around left-0 right-0 dark:bg-slate-900 h-14">
       <li

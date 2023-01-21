@@ -6,7 +6,10 @@ const GameOverScreen = ({
   resetGame,
 }: GameOverScreenProps) => {
   return (
-    <div className="border flex items-center justify-center flex-col absolute top-0 bottom-0 left-0 right-0 bg-black/70">
+    <div className="border flex items-center justify-center space-y-4 flex-col absolute top-0 bottom-0 left-0 right-0 bg-black/70">
+      <h1 className="text-4xl text-red-500 font-semibold">
+        Game Over!
+      </h1>
       <div className="text-white font-medium flex gap-5">
         <span>Your Score: {yourScore}</span>
         <span>Top Score: {topScore}</span>
