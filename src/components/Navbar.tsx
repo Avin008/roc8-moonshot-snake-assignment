@@ -15,7 +15,7 @@ const Navbar = ({
           className="dark:text-white cursor-pointer dark:hover:bg-slate-700 p-1 rounded-md"
           onClick={darkModeSetter}
         >
-          {darkMode ? (
+          {!darkMode ? (
             <MdDarkMode size={25} />
           ) : (
             <MdLightMode size={25} />
